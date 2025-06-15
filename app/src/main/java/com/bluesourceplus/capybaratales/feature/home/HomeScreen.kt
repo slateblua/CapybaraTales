@@ -1,12 +1,10 @@
 package com.bluesourceplus.capybaratales.feature.home
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -16,7 +14,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -27,11 +24,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.bluesourceplus.capybaratales.data.MoodModel
+import com.bluesourceplus.capybaratales.components.MoodCard
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -80,7 +76,7 @@ fun HomeScreen(
                         Spacer(modifier = Modifier.height(15.dp))
                         MoodCard(
                             modifier = Modifier.padding(5.dp),
-                            mood = mood,
+                            moodModel = mood,
                         )
                     }
                 }
@@ -116,41 +112,8 @@ fun HomeEmptyContent(
                 content = {
                     Text(text = "Create one now!")
                 },
-                shape = RoundedCornerShape(10.dp)
+                shape = RoundedCornerShape(40.dp)
             )
-        }
-    }
-}
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun MoodCard(
-    modifier: Modifier = Modifier,
-    mood: MoodModel,
-) {
-    Card(
-        modifier = modifier,
-        shape = RoundedCornerShape(16.dp)
-    ) {
-        Box {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                ) {
-                    Text(
-                        text = mood.mood.emoji,
-                        style = MaterialTheme.typography.headlineSmall,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                    Spacer(modifier = Modifier.height(20.dp))
-                }
-            }
         }
     }
 }

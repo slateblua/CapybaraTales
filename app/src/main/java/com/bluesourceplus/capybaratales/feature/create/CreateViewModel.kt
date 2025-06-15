@@ -38,7 +38,7 @@ sealed interface CreateGoalIntent {
 sealed interface State {
     data class Content(
         val id: Int = 0,
-        val mood: Mood = Mood.CALM,
+        val mood: Mood = Mood.SAD,
         val note: String = "",
     ) : State
 }

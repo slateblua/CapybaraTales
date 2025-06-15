@@ -20,7 +20,7 @@ sealed interface AboutMoodState {
     data class Content(
         val id: Int = 0,
         val note: String = "",
-        val mood: Mood = Mood.GRATEFUL,
+        val mood: Mood = Mood.SAD,
     ) : AboutMoodState
 }
 

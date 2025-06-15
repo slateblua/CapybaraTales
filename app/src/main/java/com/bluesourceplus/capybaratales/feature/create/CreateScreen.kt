@@ -186,6 +186,11 @@ fun MoodButton(mood: Mood, isSelected: Boolean, onClick: () -> Unit) {
         shape = CircleShape,
         contentPadding = PaddingValues(0.dp)
     ) {
-        Text(mood.emoji, fontSize = 24.sp)
+        Icon(
+            imageVector = mood.icon,
+            contentDescription = mood.displayName,
+            modifier = Modifier.size(24.dp),
+            tint = if (isSelected) Color.White else mood.color
+        )
     }
 }
