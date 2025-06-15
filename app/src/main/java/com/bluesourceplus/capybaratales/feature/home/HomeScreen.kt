@@ -2,7 +2,6 @@ package com.bluesourceplus.capybaratales.feature.home
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -39,13 +38,13 @@ import org.koin.androidx.compose.koinViewModel
 fun HomeScreenRoute(
     viewModel: HomeViewModel = koinViewModel(),
     onAddButton: () -> Unit,
-    onGoalPressed: (Int) -> Unit
+    onMoodCardPressed: (Int) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     HomeScreen(
         onAddButton = onAddButton,
-        onGoalPressed = onGoalPressed,
+        onMoodCardPressed = onMoodCardPressed,
         state = state,
     )
 }
@@ -54,7 +53,7 @@ fun HomeScreenRoute(
 @Composable
 fun HomeScreen(
     onAddButton: () -> Unit,
-    onGoalPressed: (Int) -> Unit,
+    onMoodCardPressed: (Int) -> Unit,
     state: HomeScreenState,
 ) {
     Column(

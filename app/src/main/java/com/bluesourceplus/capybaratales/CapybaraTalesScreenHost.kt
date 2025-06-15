@@ -59,7 +59,7 @@ fun BlueDaysScreensHost(
         appScreen(Destination.Home) {
             HomeScreenRoute(onAddButton = {
                 navController.navigate(CREATE_SCREEN_ROUTE)
-            }, onGoalPressed = {
+            }, onMoodCardPressed = {
                 navController.navigate("$ABOUT_GOAL_SCREEN_ROUTE/$it") { launchSingleTop = true }
             })
         }
