@@ -31,8 +31,8 @@ fun AboutMoodRoute(
         state = state,
         aboutMoodViewModel = aboutMoodViewModel,
         back = back,
-        onEditPressed = onEditPressed,
-        onAboutGoalIntent = { aboutMoodViewModel.handleEvent(it) },
+        onUpdateMoodPressed = onEditPressed,
+        onAboutMoodIntent = { aboutMoodViewModel.handleEvent(it) },
     )
 }
 
@@ -43,8 +43,8 @@ fun AboutMoodScreen(
     state: AboutMoodState,
     aboutMoodViewModel: AboutMoodViewModel,
     back: () -> Unit,
-    onEditPressed: (Int) -> Unit,
-    onAboutGoalIntent: (AboutMoodIntent) -> Unit
+    onUpdateMoodPressed: (Int) -> Unit,
+    onAboutMoodIntent: (AboutMoodIntent) -> Unit
 ) {
     Column(
         modifier = Modifier
