@@ -1,5 +1,7 @@
 package com.bluesourceplus.capybaratales.components
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -16,7 +19,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bluesourceplus.capybaratales.data.Mood
@@ -31,24 +36,34 @@ fun MoodCard(moodModel: MoodModel, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        shape = MaterialTheme.shapes.medium,
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+            .padding(horizontal = 16.dp, vertical = 8.dp), // More horizontal padding for a sleeker look
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp), // Slightly less elevation
+        // Use a more subtle color, or even transparent if your screen background isn't white
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        shape = MaterialTheme.shapes.large // Softer, larger rounded corners
     ) {
         Row(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.Top // Align icon to the top of the text content
         ) {
-            // Mood Icon
-            Icon(
-                imageVector = moodModel.mood.icon,
-                contentDescription = "Mood: ${moodModel.mood.displayName}",
-                tint = moodModel.mood.color,
-                modifier = Modifier.size(48.dp)
-            )
+            // Enhanced Mood Icon
+            Box(
+                modifier = Modifier
+                    .size(56.dp) // Larger icon
+                    .clip(CircleShape) // Circular background for the icon
+                    .background(moodModel.mood.color.copy(alpha = 0.15f)) // Softer background based on mood color
+                    .padding(8.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = moodModel.mood.icon,
+                    contentDescription = "Mood: ${moodModel.mood.displayName}",
+                    tint = moodModel.mood.color, // Mood color for the icon itself
+                    modifier = Modifier.size(32.dp)
+                )
+            }
 
             Spacer(modifier = Modifier.width(16.dp))
 
@@ -56,26 +71,30 @@ fun MoodCard(moodModel: MoodModel, modifier: Modifier = Modifier) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = moodModel.mood.displayName,
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    style = MaterialTheme.typography.headlineSmall, // More prominent title
+                    fontWeight = FontWeight.SemiBold,
+                    color = moodModel.mood.color // Title color matches mood
                 )
 
+                Spacer(modifier = Modifier.height(6.dp))
+
                 if (moodModel.note.isNotBlank()) {
-                    Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = moodModel.note,
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.8f),
-                        maxLines = 3 // Limit note length for display
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                        maxLines = 2, // Keep it concise
+                        overflow = TextOverflow.Ellipsis
                     )
+                    Spacer(modifier = Modifier.height(10.dp))
+                } else {
+                    Spacer(modifier = Modifier.height(4.dp)) // Smaller space if no note
                 }
 
-                Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = formatTimestamp(moodModel.timestamp),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+                    style = MaterialTheme.typography.bodySmall, // Consistent small text style
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
                 )
             }
         }
