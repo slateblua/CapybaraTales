@@ -31,6 +31,14 @@ import java.util.Date
 import java.util.Locale
 
 // --- Composable for the Mood Card ---
+/**
+ * Displays a card representing a mood entry with an icon, mood name, optional note, and timestamp.
+ *
+ * The card visually emphasizes the mood using color and iconography, and adapts its layout based on the presence of a note.
+ *
+ * @param moodModel The mood entry data to display, including mood type, note, and timestamp.
+ * @param modifier Optional modifier for customizing the card's layout or appearance.
+ */
 @Composable
 fun MoodCard(moodModel: MoodModel, modifier: Modifier = Modifier) {
     Card(
