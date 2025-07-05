@@ -16,10 +16,10 @@ val dataModule = module {
 
     single {
         Room.databaseBuilder(
-            androidContext(),
-            MoodDatabase::class.java,
-            DATABASE_NAME,
-        ).fallbackToDestructiveMigration()
+                androidContext(),
+                MoodDatabase::class.java,
+                DATABASE_NAME,
+            ).fallbackToDestructiveMigration(false)
             .build()
     }
 
