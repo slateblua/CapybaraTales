@@ -8,7 +8,7 @@ import kotlinx.datetime.LocalDate
 
 @Database(entities = [MoodEntry::class], version = 1, exportSchema = false)
 @TypeConverters(LocalDateConverters::class)
-abstract class GoalDatabase : RoomDatabase() {
+abstract class MoodDatabase : RoomDatabase() {
     abstract fun getMoodDao(): MoodDao
 }
 

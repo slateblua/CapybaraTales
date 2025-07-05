@@ -49,7 +49,7 @@ import java.util.Date
 import java.util.Locale
 
 @Composable
-fun CreateScreenRoute(mode: CreateGoalMode, back: () -> Unit) {
+fun CreateScreenRoute(mode: CreateMoodMode, back: () -> Unit) {
     val createViewModel: CreateViewModel = koinViewModel { parametersOf(mode) }
     CreateScreen(createViewModel, back)
 }
@@ -65,10 +65,10 @@ fun CreateScreen(createViewModel: CreateViewModel, back: () -> Unit) {
     LaunchedEffect(Unit) {
         createViewModel.sideEffect.collect { effect ->
             when (effect) {
-                CreateGoalEffect.MoodSaved -> {
+                CreateMoodEffect.MoodSaved -> {
                     // empty for now
                 }
-                CreateGoalEffect.NavigateUp -> {
+                CreateMoodEffect.NavigateUp -> {
                     back()
                 }
             }
@@ -88,7 +88,7 @@ fun CreateScreen(createViewModel: CreateViewModel, back: () -> Unit) {
                     if ((state as State.Content).note.isEmpty()) {
                         canBeCreated = false
                     } else {
-                        createViewModel.handleEvent(CreateGoalIntent.OnSaveClicked)
+                        createViewModel.handleEvent(CreateMoodIntent.OnSaveClicked)
                     }
                 }) {
                     Icon(imageVector = Icons.Default.Check, contentDescription = "Save")
@@ -129,7 +129,7 @@ fun CreateScreen(createViewModel: CreateViewModel, back: () -> Unit) {
                     MoodButton(
                         mood = mood,
                         onClick = {
-                            createViewModel.handleEvent(CreateGoalIntent.OnMoodChanged(Mood.entries[index]))
+                            createViewModel.handleEvent(CreateMoodIntent.OnMoodChanged(Mood.entries[index]))
                         },
                         isSelected = (mood == (state as State.Content).mood),
                     )
@@ -150,7 +150,7 @@ fun CreateScreen(createViewModel: CreateViewModel, back: () -> Unit) {
             OutlinedTextField(
                 value = (state as State.Content).note,
                 onValueChange = {
-                    createViewModel.handleEvent(CreateGoalIntent.OnNoteChanged(it))
+                    createViewModel.handleEvent(CreateMoodIntent.OnNoteChanged(it))
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -161,7 +161,7 @@ fun CreateScreen(createViewModel: CreateViewModel, back: () -> Unit) {
             Spacer(modifier = Modifier.weight(1f))
 
             Button(
-                onClick = { createViewModel.handleEvent(CreateGoalIntent.OnSaveClicked) },
+                onClick = { createViewModel.handleEvent(CreateMoodIntent.OnSaveClicked) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),

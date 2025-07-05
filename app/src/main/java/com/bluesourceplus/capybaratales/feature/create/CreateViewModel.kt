@@ -2,8 +2,8 @@ package com.bluesourceplus.capybaratales.feature.create
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bluesourceplus.bluedays.feature.create.usecases.AddGoalUseCase
-import com.bluesourceplus.bluedays.feature.create.usecases.UpdateGoalUseCase
+import com.bluesourceplus.capybaratales.feature.create.usecases.AddMoodUseCase
+import com.bluesourceplus.capybaratales.feature.create.usecases.UpdateMoodUseCase
 import com.bluesourceplus.capybaratales.data.Mood
 import com.bluesourceplus.capybaratales.data.MoodModel
 import com.bluesourceplus.capybaratales.feature.aboutmoodentry.usecases.GetMoodByIdUseCase
@@ -18,21 +18,21 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-sealed class CreateGoalMode {
-    data object Create : CreateGoalMode()
-    data class Edit(val goalId: Int) : CreateGoalMode()
+sealed class CreateMoodMode {
+    data object Create : CreateMoodMode()
+    data class Edit(val moodId: Int) : CreateMoodMode()
 }
 
-sealed interface CreateGoalIntent {
+sealed interface CreateMoodIntent {
     data class OnMoodChanged(
         val mood: Mood,
-    ) : CreateGoalIntent
+    ) : CreateMoodIntent
 
     data class OnNoteChanged(
         val description: String,
-    ) : CreateGoalIntent
+    ) : CreateMoodIntent
 
-    data object OnSaveClicked : CreateGoalIntent
+    data object OnSaveClicked : CreateMoodIntent
 }
 
 sealed interface State {
@@ -43,23 +43,23 @@ sealed interface State {
     ) : State
 }
 
-sealed class CreateGoalEffect {
-    data object MoodSaved : CreateGoalEffect()
-    data object NavigateUp : CreateGoalEffect()
+sealed class CreateMoodEffect {
+    data object MoodSaved : CreateMoodEffect()
+    data object NavigateUp : CreateMoodEffect()
 }
 
-class CreateViewModel(private val mode: CreateGoalMode) : ViewModel(), KoinComponent {
-    private val addGoalUseCase: AddGoalUseCase by inject()
+class CreateViewModel(private val mode: CreateMoodMode) : ViewModel(), KoinComponent {
+    private val addMoodUseCase: AddMoodUseCase by inject()
     private val getMoodByIdUseCase: GetMoodByIdUseCase by inject()
-    private val updateGoalUseCase: UpdateGoalUseCase by inject()
+    private val updateMoodUseCase: UpdateMoodUseCase by inject()
 
     init {
-        if (mode is CreateGoalMode.Edit) {
-            loadMood(mode.goalId)
+        if (mode is CreateMoodMode.Edit) {
+            loadMood(mode.moodId)
         }
     }
 
-    private val _sideEffect = Channel<CreateGoalEffect>()
+    private val _sideEffect = Channel<CreateMoodEffect>()
     val sideEffect = _sideEffect.receiveAsFlow()
 
     private val _state =
@@ -68,11 +68,11 @@ class CreateViewModel(private val mode: CreateGoalMode) : ViewModel(), KoinCompo
         )
     val state = _state.asStateFlow()
 
-    fun handleEvent(event: CreateGoalIntent) {
+    fun handleEvent(event: CreateMoodIntent) {
         when (event) {
-            is CreateGoalIntent.OnNoteChanged -> setDescription(event.description)
-            is CreateGoalIntent.OnSaveClicked -> addOrUpdateMood()
-            is CreateGoalIntent.OnMoodChanged -> setMood(event.mood)
+            is CreateMoodIntent.OnNoteChanged -> setDescription(event.description)
+            is CreateMoodIntent.OnSaveClicked -> addOrUpdateMood()
+            is CreateMoodIntent.OnMoodChanged -> setMood(event.mood)
         }
     }
 
@@ -90,12 +90,12 @@ class CreateViewModel(private val mode: CreateGoalMode) : ViewModel(), KoinCompo
 
     private fun loadMood(moodId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val goal = getMoodByIdUseCase(moodId).first()
+            val mood = getMoodByIdUseCase(moodId).first()
             _state.update {
                 State.Content(
-                    id = goal.id,
-                    mood = goal.mood,
-                    note = goal.note,
+                    id = mood.id,
+                    mood = mood.mood,
+                    note = mood.note,
                 )
             }
         }
@@ -104,21 +104,21 @@ class CreateViewModel(private val mode: CreateGoalMode) : ViewModel(), KoinCompo
     private fun addOrUpdateMood() {
         viewModelScope.launch(Dispatchers.IO) {
             val state = _state.value as State.Content
-            val goal =
+            val mood =
                 MoodModel(
                     id = state.id,
                     note = state.note,
                     mood = state.mood,
                 )
 
-            if (mode is CreateGoalMode.Edit) {
-                updateGoalUseCase(goal)
+            if (mode is CreateMoodMode.Edit) {
+                updateMoodUseCase(mood)
             } else {
-                addGoalUseCase(goal)
+                addMoodUseCase(mood)
             }
 
-            _sideEffect.send(CreateGoalEffect.MoodSaved)
-            _sideEffect.send(CreateGoalEffect.NavigateUp)
+            _sideEffect.send(CreateMoodEffect.MoodSaved)
+            _sideEffect.send(CreateMoodEffect.NavigateUp)
         }
     }
 }

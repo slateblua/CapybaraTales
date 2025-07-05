@@ -39,7 +39,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import com.bluesourceplus.capybaratales.feature.preferences.PreferencesScreenRoute
 import com.bluesourceplus.capybaratales.feature.aboutmoodentry.AboutMoodRoute
-import com.bluesourceplus.capybaratales.feature.create.CreateGoalMode
+import com.bluesourceplus.capybaratales.feature.create.CreateMoodMode
 import com.bluesourceplus.capybaratales.feature.create.CreateScreenRoute
 import com.bluesourceplus.capybaratales.feature.home.HomeScreenRoute
 
@@ -60,17 +60,17 @@ fun BlueDaysScreensHost(
             HomeScreenRoute(onAddButton = {
                 navController.navigate(CREATE_SCREEN_ROUTE)
             }, onMoodCardPressed = {
-                navController.navigate("$ABOUT_GOAL_SCREEN_ROUTE/$it") { launchSingleTop = true }
+                navController.navigate("$ABOUT_MOOD_SCREEN_ROUTE/$it") { launchSingleTop = true }
             })
         }
 
-        appScreen(Destination.AboutGoal) { backStackEntry ->
-            backStackEntry.arguments?.getInt(GOAL_ID_ARG)?.let { goalId ->
+        appScreen(Destination.AboutMood) { backStackEntry ->
+            backStackEntry.arguments?.getInt(MOOD_ID_ARG)?.let { moodId ->
                 AboutMoodRoute(
-                    goalId = goalId,
+                    moodId = moodId,
                     back = navController::popBackStack,
                     onEditPressed = {
-                        navController.navigate("$CREATE_SCREEN_ROUTE?$GOAL_ID_ARG=$goalId")
+                        navController.navigate("$CREATE_SCREEN_ROUTE?$MOOD_ID_ARG=$moodId")
                     }
                 )
             }
@@ -81,11 +81,11 @@ fun BlueDaysScreensHost(
         }
 
         appScreen(Destination.Create) { backStackEntry ->
-            val goalId = backStackEntry.arguments?.getString(GOAL_ID_ARG)
-            val mode = if (goalId != null) {
-                CreateGoalMode.Edit(Integer.parseInt(goalId))
+            val moodId = backStackEntry.arguments?.getString(MOOD_ID_ARG)
+            val mode = if (moodId != null) {
+                CreateMoodMode.Edit(Integer.parseInt(moodId))
             } else {
-                CreateGoalMode.Create
+                CreateMoodMode.Create
             }
             CreateScreenRoute(mode = mode, back = navController::popBackStack)
         }
@@ -179,8 +179,8 @@ const val CREATE_SCREEN_ROUTE = "create"
 const val HOME_SCREEN_ROUTE = "home"
 const val PREFERENCES_SCREEN_ROUTE = "preferences"
 
-const val ABOUT_GOAL_SCREEN_ROUTE = "about_goal"
-const val GOAL_ID_ARG = "goal_id"
+const val ABOUT_MOOD_SCREEN_ROUTE = "about_mood"
+const val MOOD_ID_ARG = "mood_id"
 
 object ShowNavBarScreens {
     val screens = listOf(
@@ -192,10 +192,10 @@ object ShowNavBarScreens {
 object Destination {
 
     data object Create : Screen(
-        route = "$CREATE_SCREEN_ROUTE?$GOAL_ID_ARG={$GOAL_ID_ARG}",
+        route = "$CREATE_SCREEN_ROUTE?$MOOD_ID_ARG={$MOOD_ID_ARG}",
         arguments =
         listOf(
-            navArgument(GOAL_ID_ARG) {
+            navArgument(MOOD_ID_ARG) {
                 type = NavType.StringType
                 nullable = true
             },
@@ -212,11 +212,11 @@ object Destination {
         hasBottomBar = true,
     )
 
-    data object AboutGoal : Screen(
-        route = "$ABOUT_GOAL_SCREEN_ROUTE/{$GOAL_ID_ARG}",
+    data object AboutMood : Screen(
+        route = "$ABOUT_MOOD_SCREEN_ROUTE/{$MOOD_ID_ARG}",
         arguments =
         listOf(
-            navArgument(GOAL_ID_ARG) {
+            navArgument(MOOD_ID_ARG) {
                 type = NavType.IntType
                 nullable = false
             },

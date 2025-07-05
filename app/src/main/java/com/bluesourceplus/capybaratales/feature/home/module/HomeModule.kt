@@ -2,7 +2,7 @@ package com.bluesourceplus.capybaratales.feature.home.module
 
 import com.bluesourceplus.capybaratales.feature.home.HomeViewModel
 import com.bluesourceplus.capybaratales.feature.home.usecases.GetAllMoodsUseCase
-import com.bluesourceplus.bluedays.feature.home.usecases.GetAllMoodsUseCaseImpl
+import com.bluesourceplus.capybaratales.feature.home.usecases.GetAllMoodsUseCaseImpl
 import com.bluesourceplus.capybaratales.feature.home.usecases.UpdateMoodUseCase
 import com.bluesourceplus.capybaratales.feature.home.usecases.UpdateMoodUseCaseImpl
 import org.koin.core.module.dsl.viewModel

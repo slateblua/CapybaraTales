@@ -20,14 +20,14 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun AboutMoodRoute(
     aboutMoodViewModel: AboutMoodViewModel = koinViewModel(),
-    goalId: Int,
+    moodId: Int,
     back: () -> Unit,
     onEditPressed: (Int) -> Unit
 ) {
     val state by aboutMoodViewModel.state.collectAsStateWithLifecycle()
 
     AboutMoodScreen(
-        goalId = goalId,
+        moodId = moodId,
         state = state,
         aboutMoodViewModel = aboutMoodViewModel,
         back = back,
@@ -39,7 +39,7 @@ fun AboutMoodRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutMoodScreen(
-    goalId: Int,
+    moodId: Int,
     state: AboutMoodState,
     aboutMoodViewModel: AboutMoodViewModel,
     back: () -> Unit,
@@ -63,7 +63,7 @@ fun AboutMoodScreen(
         )
 
         LaunchedEffect(Unit) {
-            aboutMoodViewModel.handleEvent(AboutMoodIntent.LoadMood(goalId))
+            aboutMoodViewModel.handleEvent(AboutMoodIntent.LoadMood(moodId))
         }
 
         LaunchedEffect(Unit) {

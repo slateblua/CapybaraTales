@@ -2,7 +2,7 @@ package com.bluesourceplus.capybaratales
 
 import android.app.Application
 import com.bluesourceplus.capybaratales.data.database.module.dataModule
-import com.bluesourceplus.bluedays.feature.aboutgoalscreen.module.aboutModule
+import com.bluesourceplus.capybaratales.feature.aboutmoodentry.module.aboutModule
 import com.bluesourceplus.bluedays.feature.create.module.createModule
 import com.bluesourceplus.capybaratales.feature.home.module.homeModule
 import com.bluesourceplus.capybaratales.feature.preferences.module.preferencesModule

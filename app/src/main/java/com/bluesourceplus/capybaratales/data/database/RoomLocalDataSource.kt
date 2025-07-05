@@ -6,16 +6,16 @@ import kotlinx.coroutines.flow.map
 
 class RoomLocalDataSource (private val dao: MoodDao): LocalDataSource {
     override fun getAll(): Flow<List<MoodModel>> {
-        return dao.getAll().map { goalFlow ->
-            goalFlow.map { goalEnt ->
-                goalEnt.toModel()
+        return dao.getAll().map { moodFlow ->
+            moodFlow.map { moodEnt ->
+                moodEnt.toModel()
             }
         }
     }
 
     override fun getById(id: Int): Flow<MoodModel> {
-        return dao.getById(id).map { goalEnt ->
-            goalEnt.toModel()
+        return dao.getById(id).map { moodEnt ->
+            moodEnt.toModel()
         }
     }
 

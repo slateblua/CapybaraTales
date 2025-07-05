@@ -1,10 +1,10 @@
-package com.bluesourceplus.bluedays.feature.aboutgoalscreen.module
+package com.bluesourceplus.capybaratales.feature.aboutmoodentry.module
 
 import com.bluesourceplus.capybaratales.feature.aboutmoodentry.AboutMoodViewModel
 import com.bluesourceplus.capybaratales.feature.aboutmoodentry.usecases.DeleteMoodUseCase
-import com.bluesourceplus.bluedays.feature.aboutgoalscreen.usecases.DeleteMoodUseCaseImpl
+import com.bluesourceplus.capybaratales.feature.aboutmoodentry.usecases.DeleteMoodUseCaseImpl
 import com.bluesourceplus.capybaratales.feature.aboutmoodentry.usecases.GetMoodByIdUseCase
-import com.bluesourceplus.bluedays.feature.aboutgoalscreen.usecases.GetMoodByIdUseCaseImpl
+import com.bluesourceplus.capybaratales.feature.aboutmoodentry.usecases.GetMoodByIdUseCaseImpl
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.bind
 import org.koin.dsl.module

@@ -1,7 +1,7 @@
-package com.bluesourceplus.capybaratales.feature.aboutmoodentry.usecases
+package com.bluesourceplus.capybaratales.feature.create.usecases
 
 import com.bluesourceplus.capybaratales.data.MoodModel
 
-interface DeleteMoodUseCase {
+interface UpdateMoodUseCase {
     suspend operator fun invoke(mood: MoodModel)
 }

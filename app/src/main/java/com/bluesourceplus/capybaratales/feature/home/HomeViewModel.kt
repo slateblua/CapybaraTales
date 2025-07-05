@@ -26,9 +26,9 @@ class HomeViewModel : ViewModel(), KoinComponent {
 
     val state: StateFlow<HomeScreenState> =
         moods
-            .map { goals ->
-                if (goals.isNotEmpty()) {
-                    HomeScreenState.Content(goals)
+            .map { moods ->
+                if (moods.isNotEmpty()) {
+                    HomeScreenState.Content(moods)
                 } else {
                     HomeScreenState.Empty
                 }

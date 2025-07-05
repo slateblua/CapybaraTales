@@ -30,11 +30,11 @@ sealed class AboutMoodEffect {
 
 sealed interface AboutMoodIntent {
     data class LoadMood(
-        val goalId: Int,
+        val moodId: Int,
     ) : AboutMoodIntent
 
     data class DeleteMood(
-        val id: Int,
+        val moodId: Int,
     ) : AboutMoodIntent
 }
 
@@ -54,27 +54,27 @@ class AboutMoodViewModel : ViewModel(), KoinComponent {
 
     fun handleEvent(event: AboutMoodIntent) {
         when (event) {
-            is AboutMoodIntent.LoadMood -> loadGoal(event.goalId)
-            is AboutMoodIntent.DeleteMood -> deleteGoal(goalId = event.id)
+            is AboutMoodIntent.LoadMood -> loadMood(event.moodId)
+            is AboutMoodIntent.DeleteMood -> deleteMood(moodId = event.moodId)
         }
     }
 
-    private fun deleteGoal(goalId: Int) {
+    private fun deleteMood(moodId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val goal = getMoodByIdUseCase(goalId)
-            deleteMoodUseCase(goal.first())
+            val mood = getMoodByIdUseCase(moodId)
+            deleteMoodUseCase(mood.first())
             _sideEffect.send(AboutMoodEffect.MoodDeleted)
         }
     }
 
-    private fun loadGoal(goalId: Int) {
+    private fun loadMood(moodId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val goal = getMoodByIdUseCase(goalId).first()
+            val moodModel = getMoodByIdUseCase(moodId).first()
             _state.update {
                 AboutMoodState.Content(
-                    id = goalId,
-                    note = goal.note,
-                    mood = goal.mood,
+                    id = moodId,
+                    note = moodModel.note,
+                    mood = moodModel.mood,
                 )
             }
         }
