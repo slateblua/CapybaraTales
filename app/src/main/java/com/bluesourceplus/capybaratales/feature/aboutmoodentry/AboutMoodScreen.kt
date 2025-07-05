@@ -37,6 +37,7 @@ fun AboutMoodRoute(
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
+@Suppress("unused")
 @Composable
 fun AboutMoodScreen(
     moodId: Int,

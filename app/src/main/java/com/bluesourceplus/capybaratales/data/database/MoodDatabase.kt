@@ -12,6 +12,7 @@ abstract class MoodDatabase : RoomDatabase() {
     abstract fun getMoodDao(): MoodDao
 }
 
+@Suppress("unused")
 class LocalDateConverters {
     @TypeConverter
     fun fromLong(value: Long): LocalDate {
